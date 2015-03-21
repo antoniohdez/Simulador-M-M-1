@@ -51,4 +51,16 @@ class Generator{
 		System.out.println();
 
 	}
+
+	public double getRandom(int pos){
+		return this.randNum.get(pos);
+	}
+
+	public double getInterarrivalTime(int pos){
+		return this.interarrival.get(pos);
+	}
+
+	public double getServiceTime(int pos){
+		return this.service.get(pos);
+	}
 }
