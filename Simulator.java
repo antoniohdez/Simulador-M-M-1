@@ -3,14 +3,25 @@ class Simulator{
 	private int sTime;
 	private int time;
 
+	private Queue<Client> queue;
+	private Client serving;
+	private ArrayList<Client> ;
+
 	public Simulator(int seed, double lambda, double mu, int sTime){
 		this.sTime = time;
 		this.time = 0;
 		this.generator = new Generator(seed, lambda, mu);
+		this.clients = new ArrayList<Client>();
+		this.clients.add( new Client(this.time) );
+	}
+
+	public void event(){
+
 	}
 
 	public void run(){
-		this.generator.nextRand();
+
+		this.generator.generatorLearmonthLewis();
 	}
 
 	public void L(){
@@ -31,10 +42,5 @@ class Simulator{
 
 	public void O(){
 
-	}
-
-	public static void main(String[] args) {
-		Simulator s = new Simulator(35, 5, 10, 60);
-		s.run()
 	}
 }

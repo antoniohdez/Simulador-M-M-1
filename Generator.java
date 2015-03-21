@@ -17,16 +17,9 @@ class Generator{
 		this.service = new ArrayList<Double>();
 	}
 
-	public void nextRandom(){
-		this.generatorLearmonthLewis();
-		this.interarrivalTime();
-		this.serviceTime();
-		this.print();
-	}
-
 	public void generatorLearmonthLewis(){
 		double a = 16807,
-			   c = 0 ,
+			   c = 0,
 			   m = Math.pow(2,31) - 1;
 			   //x = 35;
 
@@ -34,22 +27,40 @@ class Generator{
 		this.seed = (a*this.seed + c) % m;
 	}
 
-	public void interarrivalTime(){
-		double lastNum = this.randNum.get(randNum.size()-1);	
-		this.interarrival.add( -Math.log(1 - lastNum)/this.mu );
+	public void checkForRandom(int pos){
+		if(pos => this.size()){
+			this.generatorLearmonthLewis();
+			this.checkForRandom(pos);
+		}
 	}
 
-	public void serviceTime(){
-		double lastNum = this.randNum.get(randNum.size()-1);
-		this.service.add( -Math.log(1 - lastNum)/lambda );
+	public double interarrivalTime(int pos){
+		this.checkForRandom(pos);
+
+		double time = this.randNum.get(pos);	
+		this.interarrival.add( -Math.log(1 - time)/this.mu );
+
+		return -Math.log(1 - time)/this.mu;
 	}
 
-	public void print(){
-		System.out.println( "Rand: " + this.randNum.get(randNum.size()-1) );
-		System.out.println( "Inter: " + this.interarrival.get(interarrival.size()-1) );
-		System.out.println( "Service:" + this.service.get(service.size()-1) );
+	public double serviceTime(int pos){
+		this.checkForRandom(pos);
+
+		double time = this.randNum.get(pos);
+		this.service.add( -Math.log(1 - time)/lambda );
+
+		return -Math.log(1 - time)/lambda;
+	}
+
+	public void print(int pos){
+		System.out.println( "Rand: " + this.randNum.get( pos ) );
+		System.out.println( "Inter: " + this.interarrival.get( pos ) );
+		System.out.println( "Service:" + this.service.get( pos ) );
 		System.out.println();
+	}
 
+	public double size(){
+		return this.randNum.size();
 	}
 
 	public double getRandom(int pos){
