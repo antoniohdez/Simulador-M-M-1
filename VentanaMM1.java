@@ -6,8 +6,7 @@ import javax.swing.*;
 
 public class VentanaMM1 {
 	
-
-	public static void main(String[] args) {
+	public VentanaMM1(){
 		
 		JFrame ventana = new JFrame("Simulador M/M/1");
 		ventana.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -32,16 +31,6 @@ public class VentanaMM1 {
 		PanelMM1 panel = new PanelMM1();
 		PanelResultadosMM1 panelResp = new PanelResultadosMM1();
 		
-		JScrollBar scroll = new JScrollBar(JScrollBar.HORIZONTAL);
-		scroll.setMinimum(0);
-		scroll.setMaximum(100);
-		scroll.setBlockIncrement(30);
-		scroll.addAdjustmentListener(new AdjustmentListener() {
-            public void adjustmentValueChanged(AdjustmentEvent e) {
-                 System.out.println("Adjustment changed");
-            }
-        });
-		
 		ventana.setContentPane(p);
 		p.add(panel);
 		p.add(panelResp);
@@ -49,19 +38,12 @@ public class VentanaMM1 {
 		JScrollPane scroller = new JScrollPane(panelResp);
 		ventana.getContentPane().add(scroller);
 		
-		
-		/*JPanel p = new JPanel();
-		PanelMM1 panel = new PanelMM1();
-		PanelResultadosMM1 panelResp = new PanelResultadosMM1();
-		
-		ventana.setContentPane(p);
-		p.add(panel,BorderLayout.WEST);
-		p.add(panelResp, BorderLayout.EAST);
-		
-		p.setLayout(new GridLayout(2,1));*/
 		ventana.pack();
 			
 	}
-
+		
+	public static void main(String[] args) {	
+		VentanaMM1 v = new VentanaMM1();
+	}
 
 }
