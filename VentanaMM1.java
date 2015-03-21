@@ -28,8 +28,8 @@ public class VentanaMM1 {
 		JPanel p = new JPanel();
 		p.setLayout(new BoxLayout(p,BoxLayout.X_AXIS));
 		
-		PanelMM1 panel = new PanelMM1();
-		PanelResultadosMM1 panelResp = new PanelResultadosMM1();
+		PanelControlesMM1 panel = new PanelControlesMM1();
+		PanelResultadosMM1 panelResp = new PanelResultadosMM1(panel);
 		
 		ventana.setContentPane(p);
 		p.add(panel);
