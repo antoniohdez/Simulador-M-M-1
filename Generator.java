@@ -28,7 +28,7 @@ class Generator{
 	}
 
 	public void checkForRandom(int pos){
-		if(pos => this.size()){
+		if(pos >= this.size()){
 			this.generatorLearmonthLewis();
 			this.checkForRandom(pos);
 		}
