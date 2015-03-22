@@ -2,7 +2,7 @@ class Client{
 	private double arrivedAt;
 	private double servedAt;
 	private double serviceTime;
-	
+
 	private int id;
 
 	public Client(double arrivedAt, double servedAt, double serviceTime){
@@ -38,6 +38,10 @@ class Client{
 
 	public double getWaitingTime(){
 		return this.servedAt - this.arrivedAt;
+	}
+
+	public double getTimeInSystem(){
+		return this.getWaitingTime() + this.serviceTime;
 	}
 
 	public int getID(){

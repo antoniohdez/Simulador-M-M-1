@@ -104,23 +104,39 @@ class Simulator{
 		}
 	}
 
-	public void L(){
-
+	public double L(){
+		double result = 0;
+		for(Client c : this.clients){
+			result += c.getTimeInSystem();
+		}
+		return result/this.sTime;
 	}
 
-	public void Lq(){
-
+	public double Lq(){
+		double result = 0;
+		for(Client c : this.clients){
+			result += c.getWaitingTime();
+		}
+		return result/this.sTime;	
 	}
 
-	public void W(){
-
+	public double W(){
+		double result = 0;
+		for(Client c : this.clients){
+			result += c.getTimeInSystem();
+		}
+		return result/this.clients.size();
 	}
 
-	public void Wq(){
-
+	public double Wq(){
+		double result = 0;
+		for(Client c : this.clients){
+			result += c.getWaitingTime();
+		}
+		return result/this.clients.size();	
 	}
 
-	public void O(){
-
+	public double O(){
+		return this.idle/this.sTime;
 	}
 }
