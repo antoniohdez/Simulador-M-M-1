@@ -41,5 +41,5 @@ public class VentanaMM1 {
 		ventana.pack();
 			
 	}
-
+	
 }

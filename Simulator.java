@@ -86,7 +86,9 @@ class Simulator{
 					//this.nextExit = -1;
 					this.active = false;
 					this.idle += this.nextArrive - this.time;
-					System.out.println("Tiempo de ocio" + (this.nextArrive - this.time) );
+					
+					System.out.println("Tiempo de ocio " + (this.nextArrive - this.time) );
+					
 				}else{
 					this.serving = this.queue.poll();
 					this.serving.setServedAt(this.time);
@@ -161,5 +163,9 @@ class Simulator{
 
 	public double O(){
 		return this.idle/this.sTime;
+	}
+	
+	public double Ocio(){
+		return this.nextArrive - this.time;
 	}
 }
