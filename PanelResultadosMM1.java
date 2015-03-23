@@ -17,7 +17,7 @@ import javax.swing.JScrollPane;
 
 public class PanelResultadosMM1 extends PanelControlesMM1 implements ActionListener{
 	
-	private JLabel resultado, ocioLabel, lLabel, lqLabel, wLabel, wqLabel, oLabel;
+	private JLabel resultado, ocioLabel, lLabel, lqLabel, wLabel, wqLabel, oLabel, llegadas, servidor, salidas;
 	private PanelControlesMM1 panel;
 	
 	public PanelResultadosMM1(PanelControlesMM1 panelC){
@@ -165,7 +165,7 @@ public class PanelResultadosMM1 extends PanelControlesMM1 implements ActionListe
 	@Override
 	public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        System.out.println("Repoaint");
+        System.out.println("Repaint");
 		if( panel.s != null){
 			ArrayList<Client> clients = panel.s.getClients();
 			System.out.println("Clientes: " + clients.size() );
@@ -175,22 +175,32 @@ public class PanelResultadosMM1 extends PanelControlesMM1 implements ActionListe
 			int width = Integer.parseInt(panel.tiempo.getText())*size;
 
 			setPreferredSize(new Dimension(width + 100, 450));
-			g.drawLine(50, 200, width + 50, 200);
-			g.drawLine(50, 300, width + 50, 300);
+			g.drawLine(75, 200, width + 50, 200);
+			g.drawLine(75, 300, width + 50, 300);
+			
+			this.llegadas = new JLabel("Llegadas");
+			this.servidor = new JLabel("Servidor");
+			this.salidas = new JLabel("Salidas");
+			this.llegadas.setBounds(20, 175, 200, 15);
+			this.servidor.setBounds(20, 240, 200, 15);
+			this.salidas.setBounds(20, 300, 200, 15);
+			this.add(this.llegadas);
+			this.add(this.servidor);
+			this.add(this.salidas);
 
 			for(Client c : clients){
 				//Arrive
 				int x = (int) (c.getArrivedAt()*size);
-				g.drawLine(50 + x, 150, 50 + x, 200);
+				g.drawLine(75 + x, 150, 75 + x, 200);
 
 				//Service
 				int x1 = (int) (c.getArrivedAt()*size);
 				int x2 = (int) (c.getServedAt()*size);
-				g.drawLine(50 + x1, 200, 50 + x2, 300);
+				g.drawLine(75 + x1, 200, 75 + x2, 300);
 
 				//Exit
 				x = (int) (c.getExitTime()*size);
-				g.drawLine(50 + x, 300, 50 + x, 350);
+				g.drawLine(75 + x, 300, 75 + x, 350);
 			}
 			System.out.println();
 
