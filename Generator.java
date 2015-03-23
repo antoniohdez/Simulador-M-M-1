@@ -4,8 +4,7 @@ class Generator{
 	private double seed;
 	private double lambda;
 	private double mu;
-	private ArrayList<Double> randNumI;
-	private ArrayList<Double> randNumS;
+	private ArrayList<Double> randNum;
 	private ArrayList<Double> interarrival;
 	private ArrayList<Double> service;
 
@@ -24,12 +23,8 @@ class Generator{
 			   m = Math.pow(2,31) - 1;
 			   //x = 35;
 
-		this.randNumI.add(this.seed/m);
+		this.randNum.add(this.seed/m);
 		this.seed = (a*this.seed + c) % m;
-
-		this.randNumS.add(this.seed/m);
-		this.seed = (a*this.seed + c) % m;
-		
 	}
 
 	public void checkForRandom(int pos){
@@ -42,7 +37,7 @@ class Generator{
 	public double interarrivalTime(int pos){
 		this.checkForRandom(pos);
 
-		double time = this.randNumI.get(pos);
+		double time = this.randNum.get(pos);
 		this.interarrival.add( -Math.log(1 - time)/this.mu );
 
 		return -Math.log(1 - time)/this.mu;
@@ -51,14 +46,14 @@ class Generator{
 	public double serviceTime(int pos){
 		this.checkForRandom(pos);
 
-		double time = this.randNumS.get(pos);
+		double time = this.randNum.get(pos);
 		this.service.add( -Math.log(1 - time)/lambda );
 
 		return -Math.log(1 - time)/lambda;
 	}
 
 	public double size(){
-		return this.randNumI.size();
+		return this.randNum.size();
 	}
 
 	public double getInterarrivalTime(int pos){
