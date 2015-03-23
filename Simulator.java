@@ -47,10 +47,9 @@ class Simulator{
 		this.nextArrive += interarrivalTime;
 		this.nextExit += serviceTime;
 
-		this.lastArrive.setServedAt(0);
-		this.lastArrive.setServiceTime(serviceTime);
+		this.serving.setServedAt(0);
+		this.serving.setServiceTime(serviceTime);
 
-		System.out.println();
 		while(time < sTime){
 			if( this.nextArrive <= this.nextExit || this.active == false ){
 				this.time = this.nextArrive;
@@ -168,4 +167,13 @@ class Simulator{
 	public double Ocio(){
 		return this.nextArrive - this.time;
 	}
+
+	public ArrayList<Client> getClients(){
+		return this.clients;
+	}
+
+	public Queue<Client> getQuere(){
+		return this.queue;
+	}
+
 }

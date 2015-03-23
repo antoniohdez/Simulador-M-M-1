@@ -40,6 +40,10 @@ class Client{
 		return this.servedAt - this.arrivedAt;
 	}
 
+	public double getExitTime(){
+		return this.arrivedAt + getTimeInSystem();
+	}
+
 	public double getTimeInSystem(){
 		return this.getWaitingTime() + this.serviceTime;
 	}

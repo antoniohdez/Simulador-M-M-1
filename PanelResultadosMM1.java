@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.Queue;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Graphics;
@@ -92,8 +95,7 @@ public class PanelResultadosMM1 extends PanelControlesMM1 implements ActionListe
 	}
 	
 
-public void actionPerformed(ActionEvent e) {
-		
+	public void actionPerformed(ActionEvent e) {
 		boolean enteros, dobles;
 		
 		if(e.getSource()==panel.simular){
@@ -153,6 +155,8 @@ public void actionPerformed(ActionEvent e) {
 					this.wLabel.setText( "W: " + panel.s.W() );
 					this.wqLabel.setText( "Wq: " + panel.s.Wq() );
 					this.oLabel.setText( "O: " + panel.s.O() );
+
+					repaint();
 				}
 			}
 		}
@@ -161,9 +165,36 @@ public void actionPerformed(ActionEvent e) {
 	@Override
 	public void paintComponent(Graphics g) {
         super.paintComponent(g);
-    }  
+        System.out.println("Repoaint");
+		if( panel.s != null){
+			ArrayList<Client> clients = panel.s.getClients();
+			System.out.println("Clientes: " + clients.size() );
 
-    
-	
+			int size = 1000;
+			//int width = panel.s.getClients().size()*10;
+			int width = Integer.parseInt(panel.tiempo.getText())*size;
 
+			setPreferredSize(new Dimension(width + 100, 450));
+			g.drawLine(50, 200, width + 50, 200);
+			g.drawLine(50, 300, width + 50, 300);
+
+			for(Client c : clients){
+				//Arrive
+				int x = (int) (c.getArrivedAt()*size);
+				g.drawLine(50 + x, 150, 50 + x, 200);
+
+				//Service
+				int x1 = (int) (c.getArrivedAt()*size);
+				int x2 = (int) (c.getServedAt()*size);
+				g.drawLine(50 + x1, 200, 50 + x2, 300);
+
+				//Exit
+				x = (int) (c.getExitTime()*size);
+				g.drawLine(50 + x, 300, 50 + x, 350);
+			}
+			System.out.println();
+
+		}
+		
+    }
 }
