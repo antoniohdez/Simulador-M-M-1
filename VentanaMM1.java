@@ -9,10 +9,11 @@ public class VentanaMM1 {
 	public VentanaMM1(){
 		
 		JFrame ventana = new JFrame("Simulador M/M/1");
+
 		ventana.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		ventana.setResizable(false);
 		ventana.setLocation(400,300);
-		ventana.setPreferredSize(new Dimension(950, 450));
+		ventana.setPreferredSize(new Dimension(900, 450));
 		ventana.addWindowListener( new WindowAdapter(){
 		    public void windowClosing(WindowEvent e){
 		        JFrame frame = (JFrame)e.getSource();
@@ -22,24 +23,28 @@ public class VentanaMM1 {
 		            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		    }
 		});
-		
-		ventana.setVisible(true);
-			
-		JPanel p = new JPanel();
-		p.setLayout(new BoxLayout(p,BoxLayout.X_AXIS));
+
+		Panel p = new Panel();
+		p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
 		
 		PanelControlesMM1 panel = new PanelControlesMM1();
-		PanelResultadosMM1 panelResp = new PanelResultadosMM1(panel);
 		
-		ventana.setContentPane(p);
+		panel.setPreferredSize(new Dimension(250, 450));
 		p.add(panel);
-		p.add(panelResp);
 
-		JScrollPane scroller = new JScrollPane(panelResp);
-		ventana.getContentPane().add(scroller);
+		PanelResultadosMM1 panelResp = new PanelResultadosMM1(panel);
+		panelResp.setPreferredSize(new Dimension(800, 450));
 		
+		JScrollPane scrollPane = new JScrollPane(panelResp);
+        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
+		
+		p.add(scrollPane);
+		
+		ventana.add(p);
 		ventana.pack();
-			
+
+		ventana.setVisible(true);
 	}
-	
+
 }

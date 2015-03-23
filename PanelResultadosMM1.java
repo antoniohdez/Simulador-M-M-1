@@ -1,5 +1,6 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -17,8 +18,6 @@ public class PanelResultadosMM1 extends PanelControlesMM1 implements ActionListe
 	private PanelControlesMM1 panel;
 	
 	public PanelResultadosMM1(PanelControlesMM1 panelC){
-		//width del panel: 680
-		//height panel: 400
 		super();
 		this.panel = panelC;
 		/*
@@ -36,12 +35,12 @@ public class PanelResultadosMM1 extends PanelControlesMM1 implements ActionListe
 		this.wqLabel = new JLabel("Wq: ");
 		this.oLabel = new JLabel("O: ");
 		
-		this.ocioLabel.setBounds(100, 100, 100, 30);
-		this.lLabel.setBounds(400, 100, 100, 30);
-		this.lqLabel.setBounds(100, 200, 100, 30);
-		this.wLabel.setBounds(400, 200, 100, 30);
-		this.wqLabel.setBounds(100, 300, 100, 30);
-		this.oLabel.setBounds(400, 300, 100, 30);
+		this.ocioLabel.setBounds(100, 50, 200, 15);
+		this.lLabel.setBounds(400, 50, 200, 15);
+		this.lqLabel.setBounds(100, 65, 200, 15);
+		this.wLabel.setBounds(400, 65, 200, 15);
+		this.wqLabel.setBounds(100, 80, 200, 15);
+		this.oLabel.setBounds(400, 80, 200, 15);
 		
 		this.add(this.ocioLabel);
 		this.add(this.lLabel);
@@ -55,7 +54,6 @@ public class PanelResultadosMM1 extends PanelControlesMM1 implements ActionListe
 		/*
 		 * Add control panel components
 		 */
-		panel.setPreferredSize(new Dimension(-450, 450));
 		panel.setLayout(null);
 
 		panel.datosL.setBounds(55, 20, 150, 30);
@@ -71,7 +69,8 @@ public class PanelResultadosMM1 extends PanelControlesMM1 implements ActionListe
 		panel.simular.setBounds(70, 330, 100, 30);
 		
 		/*
-		 * @Add action listeners to buttons and text fields*/
+		 * @Add action listeners to buttons and text fields
+		 */
 		panel.semilla.addActionListener(this);
 		panel.lambda.addActionListener(this);
 		panel.miu.addActionListener(this);
@@ -148,22 +147,22 @@ public void actionPerformed(ActionEvent e) {
 					System.out.println("Wq: " + panel.s.Wq());
 					System.out.println("O: " + panel.s.O());
 					
-					
-					//aqui falla
-					this.lLabel = new JLabel("Tiempo de Ocio: " + panel.s.Ocio());
-					this.lLabel = new JLabel("L: " + panel.s.L());
-					this.lqLabel = new JLabel("Lq: " + panel.s.Lq());
-					this.wLabel = new JLabel("W: " + panel.s.W());
-					this.wqLabel = new JLabel("Wq: " + panel.s.Wq());
-					this.oLabel = new JLabel("O: " + panel.s.O());
-					
-					this.repaint();
+					this.ocioLabel.setText( "Tiempo de Ocio: " + panel.s.Ocio() );
+					this.lLabel.setText( "L: " + panel.s.L() );
+					this.lqLabel.setText( "Lq: " + panel.s.Lq() );
+					this.wLabel.setText( "W: " + panel.s.W() );
+					this.wqLabel.setText( "Wq: " + panel.s.Wq() );
+					this.oLabel.setText( "O: " + panel.s.O() );
 				}
-				
 			}
-					
 		}
 	}
+
+	@Override
+	public void paintComponent(Graphics g) {
+        super.paintComponent(g);
+    }  
+
     
 	
 
