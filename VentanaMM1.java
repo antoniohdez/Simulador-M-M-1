@@ -41,9 +41,5 @@ public class VentanaMM1 {
 		ventana.pack();
 			
 	}
-		
-	public static void main(String[] args) {	
-		VentanaMM1 v = new VentanaMM1();
-	}
 
 }

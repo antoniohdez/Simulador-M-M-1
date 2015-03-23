@@ -70,7 +70,7 @@ class Simulator{
 					this.nextExit += serviceTime;
 					this.nextArrive += this.generator.interarrivalTime( this.n );
 				}else{
-					this.nextArrive += this.generator.interarrivalTime(this.n);	
+					this.nextArrive += this.generator.interarrivalTime( this.n );	
 				}
 				this.n++;
 
@@ -96,10 +96,33 @@ class Simulator{
 
 					this.nextExit += serviceTime;
 				}
-
-
 			}else if(this.nextArrive == this.nextExit){
-				//this.time = this.nextArrive;
+				this.time = this.nextArrive;
+
+				System.out.println("Llegada: Cliente " + this.n + " " + this.time);
+
+				//Llegada de cliente
+				this.lastArrive = new Client(this.time, this.n);
+				this.queue.add(this.lastArrive);
+
+				//Calcula siguiente llegada
+				this.nextArrive += this.generator.interarrivalTime( this.n );
+
+				//Salida de cliente
+				this.clients.add( this.serving );
+
+				//Atencion a cliente nuevo
+				this.serving = this.queue.poll();
+
+				this.serving.setServedAt(this.time);
+
+				//Calcula siguiente salida y 
+				serviceTime = this.generator.serviceTime( this.serving.getID() );
+				this.serving.setServiceTime(serviceTime);
+
+				this.nextExit += serviceTime;
+				
+				this.n++;
 			}
 		}
 	}
