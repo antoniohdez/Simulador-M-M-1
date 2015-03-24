@@ -51,7 +51,7 @@ class Simulator{
 		//this.serving.setServiceTime(serviceTime);
 
 		while(time < sTime){
-			if( this.nextArrive <= this.nextExit || this.active == false ){
+			if( this.nextArrive <= this.nextExit || !this.active){
 				this.time = this.nextArrive;
 				if(this.time > this.sTime){
 					break;
@@ -70,7 +70,14 @@ class Simulator{
 					
 					System.out.println("Tiempo de servicio: " + this.serving.getID() + " " + serviceTime);
 
+					
 					this.serving.setServiceTime(serviceTime);
+					
+					//Se acaba la simulación a la mitad del servicio
+					if(this.serving.getServiceTime() + (this.nextArrive - this.nextExit) >= sTime){
+						
+					}
+					//
 					
 					this.nextExit += serviceTime + (this.nextArrive - this.nextExit);
 				}
@@ -143,6 +150,11 @@ class Simulator{
 				this.n++;
 			}
 		}
+		while(this.queue.size()!=0){
+			this.queue.peek().setServiceTime(0);			
+			this.queue.peek().setServedAt(sTime);
+			this.clients.add(this.queue.poll());
+		}
 	}
 
 	public double L(){
@@ -192,5 +204,7 @@ class Simulator{
 	public Queue<Client> getQuere(){
 		return this.queue;
 	}
+	
+	
 
 }
