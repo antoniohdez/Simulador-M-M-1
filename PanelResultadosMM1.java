@@ -139,7 +139,6 @@ public class PanelResultadosMM1 extends PanelControlesMM1 implements ActionListe
 					dobles=false;
 				}
 				if(enteros && dobles){
-					System.out.println("Todo en orden!");
 					panel.s = new Simulator(Integer.parseInt(txtSemilla), Double.parseDouble(txtLambda), 
 							Double.parseDouble(txtMiu), Integer.parseInt(txtTiempo));
 					panel.s.run();
@@ -149,12 +148,12 @@ public class PanelResultadosMM1 extends PanelControlesMM1 implements ActionListe
 					System.out.println("Wq: " + panel.s.Wq());
 					System.out.println("O: " + panel.s.O());
 					
-					this.ocioLabel.setText( "Tiempo de Ocio: " + panel.s.Ocio() );
+					this.ocioLabel.setText( "Ocio total: " + panel.s.Ocio() );
 					this.lLabel.setText( "L: " + panel.s.L() );
 					this.lqLabel.setText( "Lq: " + panel.s.Lq() );
 					this.wLabel.setText( "W: " + panel.s.W() );
 					this.wqLabel.setText( "Wq: " + panel.s.Wq() );
-					this.oLabel.setText( "O: " + panel.s.O() );
+					this.oLabel.setText( "Promedio ocio: " + panel.s.O() );
 
 					repaint();
 				}

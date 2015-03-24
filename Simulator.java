@@ -33,27 +33,29 @@ class Simulator{
 	}
 
 	public void run(){
-		this.lastArrive = new Client(this.time, 0);
-		this.queue.add( this.lastArrive );
-
 		double interarrivalTime = this.generator.interarrivalTime(this.n);
 		double serviceTime = this.generator.serviceTime(this.n);
 
-		this.serving = this.queue.poll();
+		//this.lastArrive = new Client(this.time, interarrivalTime);
+		//this.queue.add( this.lastArrive );
 
-		System.out.println("Llegada: Cliente " + this.n + " " + this.time);
+		//this.serving = this.queue.poll();
 
-		this.n++;
+		//System.out.println("Llegada: Cliente " + this.n + " " + this.time);
+
 
 		this.nextArrive += interarrivalTime;
-		this.nextExit += serviceTime;
+		this.nextExit += serviceTime + interarrivalTime;
 
-		this.serving.setServedAt(0);
-		this.serving.setServiceTime(serviceTime);
+		//this.serving.setServedAt(interarrivalTime);
+		//this.serving.setServiceTime(serviceTime);
 
 		while(time < sTime){
 			if( this.nextArrive <= this.nextExit || this.active == false ){
 				this.time = this.nextArrive;
+				if(this.time > this.sTime){
+					break;
+				}
 				this.active = true;
 				System.out.println("Llegada: Cliente " + this.n + " " + this.time);
 
@@ -71,14 +73,15 @@ class Simulator{
 					this.serving.setServiceTime(serviceTime);
 					
 					this.nextExit += serviceTime + (this.nextArrive - this.nextExit);
-					this.nextArrive += this.generator.interarrivalTime( this.n );
-				}else{
-					this.nextArrive += this.generator.interarrivalTime( this.n );	
 				}
+				this.nextArrive += this.generator.interarrivalTime( this.n+1 );	
 				this.n++;
 
 			}else if(this.nextExit < this.nextArrive && this.active ){
 				this.time = this.nextExit;
+				if(this.time > this.sTime){
+					break;
+				}
 				System.out.println("Salida: Cliente " + this.serving.getID() + " " + this.time);
 
 				this.clients.add( this.serving );
@@ -107,6 +110,9 @@ class Simulator{
 				}
 			}else if(this.nextArrive == this.nextExit){
 				this.time = this.nextArrive;
+				if(this.time > this.sTime){
+					break;
+				}
 
 				System.out.println("Llegada: Cliente " + this.n + " " + this.time);
 
@@ -115,7 +121,7 @@ class Simulator{
 				this.queue.add(this.lastArrive);
 
 				//Calcula siguiente llegada
-				this.nextArrive += this.generator.interarrivalTime( this.n );
+				this.nextArrive += this.generator.interarrivalTime( this.n+1 );
 
 				//Salida de cliente
 				this.clients.add( this.serving );
