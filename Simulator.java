@@ -28,6 +28,7 @@ class Simulator{
 		this.nextArrive = 0;
 		this.nextExit = 0;
 		this.active = true;
+		this.idle = 0;
 
 	}
 
@@ -64,9 +65,12 @@ class Simulator{
 					this.serving.setServedAt(this.time);
 
 					serviceTime = this.generator.serviceTime( this.serving.getID() );
+					
+					System.out.println("Tiempo de servicio: " + this.serving.getID() + " " + serviceTime);
+
 					this.serving.setServiceTime(serviceTime);
 					
-					this.nextExit += serviceTime;
+					this.nextExit += serviceTime + (this.nextArrive - this.nextExit);
 					this.nextArrive += this.generator.interarrivalTime( this.n );
 				}else{
 					this.nextArrive += this.generator.interarrivalTime( this.n );	
@@ -79,6 +83,7 @@ class Simulator{
 
 				this.clients.add( this.serving );
 				if(this.queue.size() == 0){
+
 					System.out.println();
 					this.serving = null;
 					
@@ -93,6 +98,9 @@ class Simulator{
 					this.serving.setServedAt(this.time);
 
 					serviceTime = this.generator.serviceTime( this.serving.getID() );
+
+					System.out.println("Tiempo de servicio: " + this.serving.getID() + " " + serviceTime);
+
 					this.serving.setServiceTime(serviceTime);
 
 					this.nextExit += serviceTime;
@@ -119,6 +127,9 @@ class Simulator{
 
 				//Calcula siguiente salida y 
 				serviceTime = this.generator.serviceTime( this.serving.getID() );
+
+				System.out.println("Tiempo de servicio: " + this.serving.getID() + " " + serviceTime);
+
 				this.serving.setServiceTime(serviceTime);
 
 				this.nextExit += serviceTime;
@@ -165,7 +176,7 @@ class Simulator{
 	}
 	
 	public double Ocio(){
-		return this.nextArrive - this.time;
+		return this.idle;
 	}
 
 	public ArrayList<Client> getClients(){

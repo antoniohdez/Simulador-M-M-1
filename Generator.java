@@ -38,18 +38,18 @@ class Generator{
 		this.checkForRandom(pos);
 
 		double time = this.randNum.get(pos);
-		this.interarrival.add( -Math.log(1 - time)/this.mu );
+		this.interarrival.add( -Math.log(1 - time)/this.lambda );
 
-		return -Math.log(1 - time)/this.mu;
+		return -Math.log(1 - time)/this.lambda;
 	}
 
 	public double serviceTime(int pos){
 		this.checkForRandom(pos);
 
 		double time = this.randNum.get(pos);
-		this.service.add( -Math.log(1 - time)/lambda );
+		this.service.add( -Math.log(1 - time)/mu );
 
-		return -Math.log(1 - time)/lambda;
+		return -Math.log(1 - time)/mu;
 	}
 
 	public double size(){

@@ -165,10 +165,8 @@ public class PanelResultadosMM1 extends PanelControlesMM1 implements ActionListe
 	@Override
 	public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        System.out.println("Repaint");
 		if( panel.s != null){
 			ArrayList<Client> clients = panel.s.getClients();
-			System.out.println("Clientes: " + clients.size() );
 
 			int size = 1000;
 			//int width = panel.s.getClients().size()*10;
@@ -202,7 +200,6 @@ public class PanelResultadosMM1 extends PanelControlesMM1 implements ActionListe
 				x = (int) (c.getExitTime()*size);
 				g.drawLine(75 + x, 300, 75 + x, 350);
 			}
-			System.out.println();
 
 		}
 		
