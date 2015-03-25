@@ -1,6 +1,7 @@
 import java.util.Queue;
 import java.util.LinkedList;
 import java.util.ArrayList;
+import java.lang.Math.*;
 
 class Simulator{
 	private Generator generator;
@@ -18,6 +19,9 @@ class Simulator{
 	private double nextArrive;
 	private double nextExit;
 
+	private double lambda;
+	private double mu;
+
 	public Simulator(int seed, double lambda, double mu, int sTime){
 		this.sTime = sTime;
 		this.time = 0;
@@ -29,26 +33,29 @@ class Simulator{
 		this.nextExit = 0;
 		this.active = true;
 		this.idle = 0;
+		this.lambda = lambda;
+		this.mu = mu;
 
 	}
 
 	public void run(){
+
+		this.lastArrive = new Client(this.time, 0);
+		this.queue.add( this.lastArrive );
+
+		this.serving = this.queue.poll();
+
+		System.out.println("Llegada: Cliente " + this.n + " " + this.time);
+
 		double interarrivalTime = this.generator.interarrivalTime(this.n);
 		double serviceTime = this.generator.serviceTime(this.n);
 
-		//this.lastArrive = new Client(this.time, interarrivalTime);
-		//this.queue.add( this.lastArrive );
-
-		//this.serving = this.queue.poll();
-
-		//System.out.println("Llegada: Cliente " + this.n + " " + this.time);
-
-
 		this.nextArrive += interarrivalTime;
-		this.nextExit += serviceTime + interarrivalTime;
+		this.nextExit += serviceTime;
 
-		//this.serving.setServedAt(interarrivalTime);
-		//this.serving.setServiceTime(serviceTime);
+		this.serving.setServedAt(0);
+		this.serving.setServiceTime(serviceTime);
+		this.n++;
 
 		while(time < sTime){
 			if( this.nextArrive <= this.nextExit || !this.active){
@@ -72,12 +79,6 @@ class Simulator{
 
 					
 					this.serving.setServiceTime(serviceTime);
-					
-					//Se acaba la simulación a la mitad del servicio
-					if(this.serving.getServiceTime() + (this.nextArrive - this.nextExit) >= sTime){
-						
-					}
-					//
 					
 					this.nextExit += serviceTime + (this.nextArrive - this.nextExit);
 				}
@@ -150,43 +151,64 @@ class Simulator{
 				this.n++;
 			}
 		}
+		//Se acaba la simulación a la mitad del servicio
+		if(this.serving != null){
+			this.serving.setServiceTime( this.sTime - this.serving.getServedAt() );
+			this.clients.add(this.serving);
+		}
+
 		while(this.queue.size()!=0){
-			this.queue.peek().setServiceTime(0);			
+			this.queue.peek().setServiceTime(sTime);			
 			this.queue.peek().setServedAt(sTime);
 			this.clients.add(this.queue.poll());
 		}
 	}
 
 	public double L(){
+		/*
 		double result = 0;
 		for(Client c : this.clients){
 			result += c.getTimeInSystem();
 		}
-		return result/this.sTime;
+		System.out.println("L Formula: " + (lambda/(mu-lambda)) );
+		System.out.println("L Simulcion: " + (result/this.sTime) );
+		return result/this.clients.size();
+		*/
+		//System.out.println("L:" +  (this.P()/(1-this.P())) );
+		return this.P()/(1-this.P());
 	}
 
 	public double Lq(){
+		/*
 		double result = 0;
 		for(Client c : this.clients){
 			result += c.getWaitingTime();
 		}
 		return result/this.sTime;	
+		*/
+		return Math.pow(this.P(), 2)/(1-this.P());
 	}
 
 	public double W(){
+		/*
 		double result = 0;
 		for(Client c : this.clients){
 			result += c.getTimeInSystem();
 		}
 		return result/this.clients.size();
+		*/
+		return this.L()/this.lambda;
 	}
 
 	public double Wq(){
+		/*
 		double result = 0;
 		for(Client c : this.clients){
 			result += c.getWaitingTime();
 		}
 		return result/this.clients.size();	
+		*/
+		return this.Lq()/this.lambda;
 	}
 
 	public double O(){
@@ -197,6 +219,10 @@ class Simulator{
 		return this.idle;
 	}
 
+	public double P(){
+		return 1 - this.O();
+	}
+
 	public ArrayList<Client> getClients(){
 		return this.clients;
 	}
@@ -204,7 +230,4 @@ class Simulator{
 	public Queue<Client> getQuere(){
 		return this.queue;
 	}
-	
-	
-
 }
